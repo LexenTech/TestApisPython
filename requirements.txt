@@ -1,0 +1,5 @@
+fastapi==0.109.0
+uvicorn==0.23.2
+supabase==x.x.x
+pydantic==x.x.x
+...
