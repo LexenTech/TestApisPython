@@ -1,12 +1,12 @@
 
-import Credentianls as cred
+import Credentials as cr
 
 print("¡Conexión a Supabase exitosa!")
 
 
 def leer_usuarios(tablename):
     # Leer todos los usuarios
-    response = cred.supabase.table(f"{tablename}").select("*").execute()
+    response = cr.supabase.table(f"{tablename}").select("*").execute()
 
     # Mostrar los resultados
     if response.data:
@@ -16,7 +16,7 @@ def leer_usuarios(tablename):
         print("No se encontraron usuarios en la tabla.")
 
 def crear_usuario(tablename, nombre, apellido_p, apellido_m, correo, telefono, rol_id, sucursal_id):
-    response = cred.supabase.table(tablename).insert({
+    response = cr.supabase.table(tablename).insert({
         "nombre": nombre,
         "apellidopaterno": apellido_p,
         "apellidomaterno": apellido_m,
@@ -44,7 +44,7 @@ def eliminar_usuario(tablename):
     # Confirmar eliminación
     confirmar = input(f"¿Estás seguro de eliminar al usuario con ID {usuario_id}? (s/n): ").lower()
     if confirmar == 's':
-        response = cred.supabase.table(tablename).delete().eq("id", usuario_id).execute()
+        response = cr.supabase.table(tablename).delete().eq("id", usuario_id).execute()
         print("Usuario eliminado:", response.data)
     else:
         print("Eliminación cancelada.")
@@ -66,7 +66,7 @@ def actualizar_campo(tablename, usuario_id, columna, nuevo_valor):
     datos_actualizar = {columna: nuevo_valor}
 
     # Ejecutar actualización
-    response = cred.supabase.table(tablename).update(datos_actualizar).eq("id", usuario_id).execute()
+    response = cr.supabase.table(tablename).update(datos_actualizar).eq("id", usuario_id).execute()
 
     if response.data:
         print(f"Registro actualizado correctamente: {response.data}")
