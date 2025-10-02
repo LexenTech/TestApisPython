@@ -138,6 +138,10 @@ def update_usuario(usuario_id: int, u: UsuarioUpdate):
     try:
         # Solo enviar los campos que no son None
         payload = {k: v for k, v in u.dict().items() if v is not None}
+        # Convertir la fecha a string si existe
+        if payload.get("fechanacimiento"):
+            payload["fechanacimiento"] = payload["fechanacimiento"].strftime("%Y-%m-%d")
+
         if not payload:
             return make_response(False, "No hay campos para actualizar")
         res = cr.supabase.table("usuarios").update(payload).eq("id", usuario_id).execute()
