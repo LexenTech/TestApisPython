@@ -24,6 +24,7 @@ class UsuarioCreate(BaseModel):
     apellidopaterno: str
     apellidomaterno: Optional[str] = None
     correo: str
+    passwordhash: str
     telefono: Optional[str] = None
     rolid: int
     sucursalid: Optional[int] = None
@@ -33,6 +34,7 @@ class UsuarioUpdate(BaseModel):
     apellidopaterno: Optional[str]
     apellidomaterno: Optional[str]
     correo: Optional[str]
+    passwordhash: Optional[str]
     telefono: Optional[str]
     rolid: Optional[int]
     sucursalid: Optional[int]
