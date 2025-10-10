@@ -1,36 +1,48 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+import sys, os
 
-import Crud as c
-import  ApisCrud
+# 🔹 Desarrollo local: agrega la carpeta raíz al path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# 🔹 Routers por entidad
+from controllers.roles_controller import router as roles_router
+from controllers.sucursales_controller import router as sucursales_router
+from controllers.usuarios_controller import router as usuarios_router
 
+# Opcional: agrega más routers si ya existen
+# from Apis.Apis1.controllers.servicios_controller import router as servicios_router
+# from Apis.Apis1.controllers.costos_controller import router as costos_router
+# from Apis.Apis1.controllers.promociones_controller import router as promociones_router
 
+# 🔹 Crear app FastAPI
+app = FastAPI(title="API Multi-Entidad")
 
-c.leer_usuarios('usuarios')
+# 🔹 Middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+# 🔹 Registrar routers
+app.include_router(roles_router)
+app.include_router(sucursales_router)
+app.include_router(usuarios_router)
 
-print("----- CREAR USUARIO -----")
-"""
-c.crear_usuario('usuarios',
-               nombre="Juancho",
-               apellido_p="Pérez",
-               apellido_m="López",
-               correo="Juancho.rojas@email.com",
-               telefono="3312345678",
-               rol_id=1,
-               sucursal_id=2)
+# app.include_router(servicios_router)
+# app.include_router(costos_router)
+# app.include_router(promociones_router)
 
-c.leer_usuarios('usuarios')
-"""
-print("----- Eliminar USUARIO -----")
-#c.eliminar_usuario('usuarios')
-
-
-tabla = "usuarios"
-
-
-print("----- Actualizar USUARIO -----")
-# Actualizar el correo del usuario con ID = 1
-c.actualizar_campo(tabla, 1, "correo", "nuevo_correo@email.com")
-
-# Actualizar el teléfono del usuario con ID = 2
-c.actualizar_campo(tabla, 2, "telefono", "3398765432")
+# 🔹 Mensaje opcional en la raíz
+@app.get("/")
+def root():
+    return {"message": "API Multi-Entidad funcionando correctamente",
+    "rutas": {
+        "roles": "/roles",
+        "sucursales": "/sucursales",
+        "usuarios": "/usuarios",
+    }
+    }
