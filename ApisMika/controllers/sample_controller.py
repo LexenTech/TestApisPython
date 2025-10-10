@@ -1,1 +1,0 @@
-def test_controller(): return {'message': 'Controller funciona'}

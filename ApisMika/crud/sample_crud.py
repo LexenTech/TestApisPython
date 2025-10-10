@@ -1,1 +1,0 @@
-def get_sample_data(): return [{'id': 1, 'name': 'Ejemplo'}]
